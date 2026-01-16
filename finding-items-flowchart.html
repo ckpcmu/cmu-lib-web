@@ -318,7 +318,7 @@
             
             // ARTICLE PATH
             articleCatalog: {
-                question: "Search the Libraries Catalog",
+                question: "Did you check the Catalog?",
                 instruction: "Search for the article title (or DOI) in the library catalog.",
                 links: [
                     { label: "Search Libraries Catalog", url: URLS.catalog, primary: true }
@@ -331,19 +331,27 @@
             },
             journalSearch: {
                 question: "Do we have online access to this journal?",
-                instruction: "Search for the journal title (not the article title) in Journal Search to see if we have access.",
+                instruction: "Search the Catalog for the journal title <em>(not the article title)</em> in Journal Search to see if we have access.",
                 links: [
                     { label: "Journal Search", url: URLS.journalSearch, primary: true }
                 ],
                 options: [
-                    { label: "Yes, we have access!", next: "done" },
-                    { label: "No, we don't have this journal", next: "articleILL" }
+                    { label: "Yes, we have access!", next: "journalFound" },
+                    { label: "No, or we don't have the year I need", next: "articleILL" }
                 ],
                 breadcrumb: "Not in catalog"
             },
+            journalFound: {
+    type: "outcome",
+    instruction: "Find your article by selecting the year, volume, and issue, or by searching the article title within the journal.",
+    links: [
+        { label: "Ask Us", url: URLS.askUs, primary: false }
+    ],
+    breadcrumb: "Journal access"
+},
             articleILL: {
                 type: "outcome",
-                instruction: "Request the article through Interlibrary Loan (ILLiad). Articles typically arrive within a few days.",
+                instruction: "Request the article through Interlibrary Loan (ILLiad). Articles typically arrive as PDFs within a day or so.",
                 tip: "If you have a DOI, it will autofill the request form!",
                 links: [
                     { label: "Request via ILLiad", url: URLS.illiad, primary: true }
