@@ -279,11 +279,11 @@
         const URLS = {
             catalog: "https://cmu.primo.exlibrisgroup.com/discovery/search?vid=01CMU_INST:01CMU",
             journalSearch: "https://cmu.primo.exlibrisgroup.com/discovery/jsearch?vid=01CMU_INST:01CMU",
-            illiad: "https://cmu.illiad.oclc.org/illiad/",
-            ezBorrow: "https://cmu.primo.exlibrisgroup.com/discovery/blending?vid=01CMU_INST:01CMU",
+            illiad: "https://illiad.library.cmu.edu/illiad/illiad.dll",
+            ezBorrow: "https://ezborrow.reshare.indexdata.com/",
             pittCatalog: "https://pitt.primo.exlibrisgroup.com/discovery/search?vid=01PITT_INST:01PITT_INST",
-            carnegieLibrary: "https://librarycatalog.einetwork.net/",
-            suggestPurchase: "https://www.library.cmu.edu/suggest-purchase",
+            carnegieLibrary: "https://acl.bibliocommons.com",
+            suggestPurchase: "https://airtable.com/appNlMLvkQYLjSYWZ/pag4Aa57nNhKNrHW9/form",
             askUs: "https://www.library.cmu.edu/ask"
         };
 
@@ -297,7 +297,7 @@
                 question: "Do you have a citation but need the full text?",
                 options: [
                     { label: "Yes, I have the citation", next: "itemType" },
-                    { label: "No, I need to find the item first", next: "needHelp" }
+                    { label: "No, I need help finding the citation", next: "needHelp" }
                 ]
             },
             needHelp: {
@@ -366,17 +366,17 @@
                 breadcrumb: "Book"
             },
             bookUrgency: {
-                question: "How urgently do you need it?",
+                question: "How quickly do you need it?",
                 options: [
-                    { label: "Soon — delivery to the library is fine", next: "ezBorrow" },
-                    { label: "Soon — I'd prefer to pick it up in person", next: "localLibraries" },
+                    { label: "Within a few days — delivery to the library is fine", next: "ezBorrow" },
+                    { label: "As soon as possible — I'd prefer to pick it up in person", next: "localLibraries" },
                     { label: "Not urgent / I want the library to own it / I need an ebook", next: "suggestPurchase" }
                 ],
                 breadcrumb: "Not in catalog"
             },
             ezBorrow: {
                 question: "Did you find it in EZBorrow?",
-                instruction: "EZBorrow lets you request books from partner libraries. Items typically arrive in about 5 business days.",
+                instruction: "EZBorrow lets you request print books from partner libraries. Items typically arrive at CMU in about 5 business days.",
                 links: [
                     { label: "Search EZBorrow", url: URLS.ezBorrow, primary: true }
                 ],
