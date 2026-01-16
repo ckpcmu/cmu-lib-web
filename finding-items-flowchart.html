@@ -181,13 +181,12 @@
             color: #a30f28;
         }
 
-        .links-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-        }
-
+.links-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
         .secondary-link {
             display: inline-flex;
             align-items: center;
@@ -319,10 +318,10 @@
             
             // ARTICLE PATH
             articleCatalog: {
-                question: "Did you find it?",
+                question: "Search the Libraries Catalog",
                 instruction: "Search for the article title (or DOI) in the library catalog.",
                 links: [
-                    { label: "Search Library Catalog", url: URLS.catalog, primary: true }
+                    { label: "Search Libraries Catalog", url: URLS.catalog, primary: true }
                 ],
                 options: [
                     { label: "Yes, I found it!", next: "done" },
@@ -480,10 +479,6 @@
                 html += `<div class="step-question">${step.question}</div>`;
             }
             
-            if (step.instruction) {
-                html += `<p class="step-instruction">${step.instruction}</p>`;
-            }
-            
             if (step.links && step.links.length > 0) {
                 html += `<div class="links-group">`;
                 step.links.forEach(link => {
@@ -494,7 +489,12 @@
                     }
                 });
                 html += `</div>`;
+            }      
+            
+            if (step.instruction) {
+                html += `<p class="step-instruction">${step.instruction}</p>`;
             }
+
             
             if (step.tip) {
                 html += `<div class="tip"><strong>Tip:</strong> ${step.tip}</div>`;
