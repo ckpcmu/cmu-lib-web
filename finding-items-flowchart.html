@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can't Find an Item? - CMU Libraries</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fa;
+            color: #2d3748;
+            line-height: 1.6;
+            padding: 1.5rem;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #c41230;
+            margin-bottom: 0.5rem;
+        }
+
+        .intro {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .step {
+            background: white;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid #c41230;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step.outcome {
+            border-left-color: #38a169;
+            background: #f0fff4;
+        }
+
+        .step-question {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            color: #1a202c;
+        }
+
+        .step-instruction {
+            margin-bottom: 1rem;
+            color: #4a5568;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-btn {
+            background: #edf2f7;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: #2d3748;
+            transition: all 0.15s ease;
+        }
+
+        .option-btn:hover {
+            background: #e2e8f0;
+            border-color: #c41230;
+        }
+
+        .option-btn:focus {
+            outline: 2px solid #c41230;
+            outline-offset: 2px;
+        }
+
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: #c41230;
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            margin-right: 0.5rem;
+            transition: background 0.15s ease;
+        }
+
+        .resource-link:hover {
+            background: #a30f28;
+        }
+
+        .resource-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .tip {
+            background: #fffbeb;
+            border: 1px solid #f6e05e;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #744210;
+        }
+
+        .tip strong {
+            color: #975a16;
+        }
+
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .breadcrumb-item::after {
+            content: "→";
+            margin-left: 0.25rem;
+            color: #a0aec0;
+        }
+
+        .breadcrumb-item:last-child::after {
+            display: none;
+        }
+
+        .restart-btn {
+            background: none;
+            border: none;
+            color: #c41230;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            text-decoration: underline;
+            margin-top: 1rem;
+        }
+
+        .restart-btn:hover {
+            color: #a30f28;
+        }
+
+        .links-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .secondary-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: #edf2f7;
+            color: #2d3748;
+            padding: 0.5rem 0.85rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: background 0.15s ease;
+        }
+
+        .secondary-link:hover {
+            background: #e2e8f0;
+        }
+
+        .back-btn {
+            background: none;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-top: 1rem;
+            transition: all 0.15s ease;
+        }
+
+        .back-btn:hover {
+            background: #edf2f7;
+            border-color: #a0aec0;
+        }
+
+        .icon-external {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Accessibility: skip link */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background: #c41230;
+            color: white;
+            padding: 0.5rem 1rem;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            left: 0;
+        }
+
+        .alt-format {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .alt-format a {
+            color: #c41230;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <h1 id="main-content">Can't Find an Item?</h1>
+        <p class="intro">Answer a few questions to find the best way to get what you need.</p>
+        
+        <div id="breadcrumb" class="breadcrumb" aria-label="Your path"></div>
+        
+        <div id="flowchart"></div>
+        
+        <div class="alt-format">
+            <strong>Alternative formats:</strong> 
+            <a href="[TEXT_VERSION_URL]">Text version</a> | 
+            <a href="[PDF_VERSION_URL]">PDF version</a>
+        </div>
+    </div>
+
+    <script>
+        // Configuration: Replace these URLs with your actual CMU Libraries URLs
+        const URLS = {
+            catalog: "https://cmu.primo.exlibrisgroup.com/discovery/search?vid=01CMU_INST:01CMU",
+            journalSearch: "https://cmu.primo.exlibrisgroup.com/discovery/jsearch?vid=01CMU_INST:01CMU",
+            illiad: "https://cmu.illiad.oclc.org/illiad/",
+            ezBorrow: "https://cmu.primo.exlibrisgroup.com/discovery/blending?vid=01CMU_INST:01CMU",
+            pittCatalog: "https://pitt.primo.exlibrisgroup.com/discovery/search?vid=01PITT_INST:01PITT_INST",
+            carnegieLibrary: "https://librarycatalog.einetwork.net/",
+            suggestPurchase: "https://www.library.cmu.edu/suggest-purchase",
+            askUs: "https://www.library.cmu.edu/ask"
+        };
+
+        const externalIcon = `<svg class="icon-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
+
+        // Flow state
+        let history = [];
+        
+        const steps = {
+            start: {
+                question: "Do you have a citation but need the full text?",
+                options: [
+                    { label: "Yes, I have the citation", next: "itemType" },
+                    { label: "No, I need to find the item first", next: "needHelp" }
+                ]
+            },
+            needHelp: {
+                type: "outcome",
+                instruction: "A librarian can help you find what you're looking for.",
+                links: [
+                    { label: "Ask Us", url: URLS.askUs, primary: true }
+                ]
+            },
+            itemType: {
+                question: "What type of item is it?",
+                options: [
+                    { label: "Article", next: "articleCatalog" },
+                    { label: "Book", next: "bookCatalog" },
+                    { label: "Something else", next: "otherCatalog" }
+                ],
+                breadcrumb: "Have citation"
+            },
+            
+            // ARTICLE PATH
+            articleCatalog: {
+                question: "Did you find it?",
+                instruction: "Search for the article title (or DOI) in the library catalog.",
+                links: [
+                    { label: "Search Library Catalog", url: URLS.catalog, primary: true }
+                ],
+                options: [
+                    { label: "Yes, I found it!", next: "done" },
+                    { label: "No, it's not there", next: "journalSearch" }
+                ],
+                breadcrumb: "Article"
+            },
+            journalSearch: {
+                question: "Do we have online access to this journal?",
+                instruction: "Search for the journal title (not the article title) in Journal Search to see if we have access.",
+                links: [
+                    { label: "Journal Search", url: URLS.journalSearch, primary: true }
+                ],
+                options: [
+                    { label: "Yes, we have access!", next: "done" },
+                    { label: "No, we don't have this journal", next: "articleILL" }
+                ],
+                breadcrumb: "Not in catalog"
+            },
+            articleILL: {
+                type: "outcome",
+                instruction: "Request the article through Interlibrary Loan (ILLiad). Articles typically arrive within a few days.",
+                tip: "If you have a DOI, it will autofill the request form!",
+                links: [
+                    { label: "Request via ILLiad", url: URLS.illiad, primary: true }
+                ],
+                breadcrumb: "No journal access"
+            },
+            
+            // BOOK PATH
+            bookCatalog: {
+                question: "Did you find it?",
+                instruction: "Search for the book in the library catalog.",
+                links: [
+                    { label: "Search Library Catalog", url: URLS.catalog, primary: true }
+                ],
+                options: [
+                    { label: "Yes, I found it!", next: "done" },
+                    { label: "No, we don't have it", next: "bookUrgency" }
+                ],
+                breadcrumb: "Book"
+            },
+            bookUrgency: {
+                question: "How urgently do you need it?",
+                options: [
+                    { label: "Soon — delivery to the library is fine", next: "ezBorrow" },
+                    { label: "Soon — I'd prefer to pick it up in person", next: "localLibraries" },
+                    { label: "Not urgent / I want the library to own it / I need an ebook", next: "suggestPurchase" }
+                ],
+                breadcrumb: "Not in catalog"
+            },
+            ezBorrow: {
+                question: "Did you find it in EZBorrow?",
+                instruction: "EZBorrow lets you request books from partner libraries. Items typically arrive in about 5 business days.",
+                links: [
+                    { label: "Search EZBorrow", url: URLS.ezBorrow, primary: true }
+                ],
+                options: [
+                    { label: "Yes, I requested it!", next: "done" },
+                    { label: "No, it's not in EZBorrow either", next: "bookILL" }
+                ],
+                breadcrumb: "EZBorrow"
+            },
+            bookILL: {
+                type: "outcome",
+                instruction: "Request the book through Interlibrary Loan (ILLiad). This may take longer than EZBorrow, but ILLiad can find items from a wider range of libraries.",
+                links: [
+                    { label: "Request via ILLiad", url: URLS.illiad, primary: true }
+                ],
+                breadcrumb: "Not in EZBorrow"
+            },
+            localLibraries: {
+                question: "Do either of these libraries have it?",
+                instruction: "Check if Pitt Library or Carnegie Library of Pittsburgh has the book available.",
+                links: [
+                    { label: "Pitt Library Catalog", url: URLS.pittCatalog, primary: false },
+                    { label: "Carnegie Library of Pittsburgh", url: URLS.carnegieLibrary, primary: false }
+                ],
+                options: [
+                    { label: "Yes, I'll pick it up there!", next: "donePickup" },
+                    { label: "No, neither has it", next: "ezBorrow" }
+                ],
+                breadcrumb: "Local pickup"
+            },
+            suggestPurchase: {
+                type: "outcome",
+                instruction: "Fill out the Suggest a Purchase form to request that the library acquire this item. This is also the best option if you specifically need an ebook.",
+                links: [
+                    { label: "Suggest a Purchase", url: URLS.suggestPurchase, primary: true }
+                ],
+                breadcrumb: "Purchase request"
+            },
+            
+            // OTHER PATH
+            otherCatalog: {
+                question: "Did you find it?",
+                instruction: "Search the library catalog for your item.",
+                links: [
+                    { label: "Search Library Catalog", url: URLS.catalog, primary: true }
+                ],
+                options: [
+                    { label: "Yes, I found it!", next: "done" },
+                    { label: "No, it's not there", next: "otherOptions" }
+                ],
+                breadcrumb: "Other item"
+            },
+            otherOptions: {
+                question: "What would you like to do?",
+                options: [
+                    { label: "Ask a librarian for help", next: "askLibrarian" },
+                    { label: "Suggest the library acquire it", next: "otherPurchase" }
+                ],
+                breadcrumb: "Not in catalog"
+            },
+            askLibrarian: {
+                type: "outcome",
+                instruction: "A librarian can help you figure out the best way to access this item.",
+                links: [
+                    { label: "Ask Us", url: URLS.askUs, primary: true }
+                ]
+            },
+            otherPurchase: {
+                type: "outcome",
+                instruction: "Fill out the Suggest a Purchase form to request that the library acquire this item.",
+                links: [
+                    { label: "Suggest a Purchase", url: URLS.suggestPurchase, primary: true }
+                ]
+            },
+            
+            // END STATES
+            done: {
+                type: "outcome",
+                instruction: "Great! You're all set. If you have trouble accessing the item, feel free to ask a librarian for help.",
+                links: [
+                    { label: "Ask Us", url: URLS.askUs, primary: false }
+                ]
+            },
+            donePickup: {
+                type: "outcome",
+                instruction: "Great! Head to that library to pick up your book. Remember to bring your ID.",
+                links: [
+                    { label: "Pitt Library", url: URLS.pittCatalog, primary: false },
+                    { label: "Carnegie Library", url: URLS.carnegieLibrary, primary: false }
+                ]
+            }
+        };
+
+        function renderStep(stepId) {
+            const step = steps[stepId];
+            const container = document.getElementById('flowchart');
+            
+            let html = `<div class="step ${step.type === 'outcome' ? 'outcome' : ''}" role="region" aria-live="polite">`;
+            
+            if (step.question) {
+                html += `<div class="step-question">${step.question}</div>`;
+            }
+            
+            if (step.instruction) {
+                html += `<p class="step-instruction">${step.instruction}</p>`;
+            }
+            
+            if (step.links && step.links.length > 0) {
+                html += `<div class="links-group">`;
+                step.links.forEach(link => {
+                    if (link.primary) {
+                        html += `<a href="${link.url}" target="_blank" rel="noopener" class="resource-link">${link.label} ${externalIcon}</a>`;
+                    } else {
+                        html += `<a href="${link.url}" target="_blank" rel="noopener" class="secondary-link">${link.label} ${externalIcon}</a>`;
+                    }
+                });
+                html += `</div>`;
+            }
+            
+            if (step.tip) {
+                html += `<div class="tip"><strong>Tip:</strong> ${step.tip}</div>`;
+            }
+            
+            if (step.options && step.options.length > 0) {
+                html += `<div class="options" role="group" aria-label="Options">`;
+                step.options.forEach((option, index) => {
+                    html += `<button class="option-btn" onclick="selectOption('${stepId}', ${index})">${option.label}</button>`;
+                });
+                html += `</div>`;
+            }
+            
+            if (history.length > 0) {
+                html += `<button class="back-btn" onclick="goBack()">← Go back</button>`;
+            }
+            
+            if (step.type === 'outcome') {
+                html += `<button class="restart-btn" onclick="restart()">Start over</button>`;
+            }
+            
+            html += `</div>`;
+            
+            container.innerHTML = html;
+            updateBreadcrumb();
+        }
+
+        function selectOption(currentStep, optionIndex) {
+            const step = steps[currentStep];
+            const nextStep = step.options[optionIndex].next;
+            
+            history.push({
+                stepId: currentStep,
+                label: step.breadcrumb || step.options[optionIndex].label
+            });
+            
+            renderStep(nextStep);
+        }
+
+        function goBack() {
+            if (history.length > 0) {
+                const prev = history.pop();
+                renderStep(prev.stepId);
+            }
+        }
+
+        function restart() {
+            history = [];
+            renderStep('start');
+        }
+
+        function updateBreadcrumb() {
+            const container = document.getElementById('breadcrumb');
+            if (history.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            history.forEach(item => {
+                html += `<span class="breadcrumb-item">${item.label}</span>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // Initialize
+        renderStep('start');
+    </script>
+</body>
+</html>
