@@ -369,9 +369,9 @@ journalFound: {
             bookUrgency: {
                 question: "How quickly do you need it?",
                 options: [
-                    { label: "Within a few days — delivery to the library is fine", next: "ezBorrow" },
-                    { label: "As soon as possible — I'd prefer to pick it up in person", next: "localLibraries" },
-                    { label: "Not urgent / I want the library to own it / I need an ebook", next: "suggestPurchase" }
+                    { label: "Within a few days — delivery to CMU is fine", next: "ezBorrow" },
+                    { label: "As soon as possible — I can go to another local library", next: "localLibraries" },
+                    { label: "Not urgent / I think CMU should own a copy / I need an ebook", next: "suggestPurchase" }
                 ],
                 breadcrumb: "Not in catalog"
             },
@@ -410,7 +410,7 @@ journalFound: {
             },
             suggestPurchase: {
                 type: "outcome",
-                instruction: "Fill out the Suggest a Purchase form to request that the library acquire this item. This is also the best option if you specifically need an ebook.",
+                instruction: "Fill out the Suggest a Purchase form to request that the Libraries acquire this item. This is also the best option if you specifically need an ebook.",
                 links: [
                     { label: "Suggest a Purchase", url: URLS.suggestPurchase, primary: true }
                 ],
